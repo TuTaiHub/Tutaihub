@@ -1,0 +1,44 @@
+-- TuTaiHub GUI
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("TuTaiHub", "Midnight")
+
+-- TAB 1: Main
+local MainTab = Window:NewTab("Main")
+local MainSection = MainTab:NewSection("Auto Farm")
+
+MainSection:NewToggle("Auto Click", "Tự động click chuột", function(state)
+    getgenv().autoClick = state
+    while getgenv().autoClick do
+        wait(0.1)
+        game:GetService("VirtualInputManager"):SendMouseButtonEvent(0, 0, 0, true, game, 1)
+        wait()
+        game:GetService("VirtualInputManager"):SendMouseButtonEvent(0, 0, 0, false, game, 1)
+    end
+end)
+
+MainSection:NewButton("Auto Skill Z", "Tự nhấn phím Z", function()
+    spawn(function()
+        while true do
+            wait(0.2)
+            local vim = game:GetService("VirtualInputManager")
+            vim:SendKeyEvent(true, "Z", false, game)
+            wait(0.05)
+            vim:SendKeyEvent(false, "Z", false, game)
+        end
+    end)
+end)
+
+-- TAB 2: Teleport
+local TeleTab = Window:NewTab("Teleport")
+local TeleSection = TeleTab:NewSection("Địa điểm")
+
+TeleSection:NewButton("Đến đảo chính", "Dịch chuyển tới đảo chính", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(100, 10, 100)
+end)
+
+-- TAB 3: Credits
+local CredTab = Window:NewTab("Credits")
+local CredSection = CredTab:NewSection("Thông tin")
+
+CredSection:NewLabel("Script by TuTaiHub")
+CredSection:NewLabel("UI by Kavo UI")
